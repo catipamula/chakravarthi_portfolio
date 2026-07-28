@@ -4,14 +4,12 @@ function toggleMenu() {
   menu.classList.toggle("open");
   icon.classList.toggle("open");
 }
-<<<<<<< HEAD
-=======
 
 function downloadAndViewCV() {
-  const fileUrl = "./assets/CHAKRAVARTHII_RESUME.pdf";
+  const fileUrl = "./assets/certify/Chakravarthi_python_exp.pdf";
   const link = document.createElement("a");
   link.href = fileUrl;
-  link.download = "CHAKRAVARTHI.pdf";
+  link.download = "Chakravarthi_Resume.pdf";
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -40,7 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const contactForm = document.getElementById("contactForm");
   if (contactForm) {
     contactForm.addEventListener("submit", () => {
-      alert("Your message has been sent successfully!");
+      const submitBtn = document.getElementById("submitBtn");
+      const loadingMessage = document.getElementById("loadingMessage");
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+      }
+      if (loadingMessage) loadingMessage.style.display = "block";
     });
   }
 
@@ -71,5 +75,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  const navLinks = [...document.querySelectorAll('.nav-links a[href^="#"], .menu-links a[href^="#"]')];
+  const sections = [...new Set(navLinks
+    .map((link) => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean))];
+
+  if (sections.length && 'IntersectionObserver' in window) {
+    const setActiveLink = (sectionId) => {
+      navLinks.forEach((link) => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
+      });
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      const visibleSection = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visibleSection) setActiveLink(visibleSection.target.id);
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: [0.01, 0.25, 0.5] });
+
+    sections.forEach((section) => sectionObserver.observe(section));
+  }
 });
->>>>>>> 27a2b6f (Updated portfolio with new features and bug fixes)

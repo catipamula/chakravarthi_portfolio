@@ -1,40 +1,3 @@
-<<<<<<< HEAD
-let currentIndex = 0;
-let images = [];
-
-function showGallery(id) {
-    document.getElementById(id).style.display = 'block';
-}
-
-function closeGallery(id) {
-    document.getElementById(id).style.display = 'none';
-}
-
-/* Open Lightbox with Image Preview */
-function openLightbox(src) {
-    images = Array.from(document.querySelectorAll('.gallery .images img')).map(img => img.src);
-    currentIndex = images.indexOf(src);
-
-    document.getElementById('lightbox-img').src = src;
-    document.getElementById('lightbox').style.display = 'flex';
-}
-
-/* Close Lightbox */
-function closeLightbox() {
-    document.getElementById('lightbox').style.display = 'none';
-}
-
-/* Navigate Images in Lightbox */
-function nextImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    document.getElementById('lightbox-img').src = images[currentIndex];
-}
-
-function prevImage() {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    document.getElementById('lightbox-img').src = images[currentIndex];
-}
-=======
 let currentIndex = 0;
 let images = [];
 let zoomLevel = 1;
@@ -90,12 +53,8 @@ const updateLightboxUI = () => {
   img.src = images[currentIndex];
   img.alt = getFilename(images[currentIndex]);
 
-  if (counter) {
-    counter.textContent = `${currentIndex + 1} / ${images.length}`;
-  }
-  if (filename) {
-    filename.textContent = getFilename(images[currentIndex]);
-  }
+  if (counter) counter.textContent = `${currentIndex + 1} / ${images.length}`;
+  if (filename) filename.textContent = getFilename(images[currentIndex]);
 
   applyZoom();
 };
@@ -150,9 +109,7 @@ const closeLightbox = () => {
 
   setTimeout(() => {
     lb.style.display = "none";
-    if (!activeGalleryId) {
-      document.body.style.overflow = "";
-    }
+    if (!activeGalleryId) document.body.style.overflow = "";
     zoomLevel = 1;
     isFitScreen = true;
   }, 300);
@@ -199,48 +156,29 @@ const isLightboxOpen = () => {
 
 document.addEventListener("keydown", (e) => {
   if (!isLightboxOpen()) {
-    if (e.key === "Escape" && activeGalleryId) {
-      closeGallery(activeGalleryId);
-    }
+    if (e.key === "Escape" && activeGalleryId) closeGallery(activeGalleryId);
     return;
   }
 
   switch (e.key) {
-    case "ArrowRight":
-      nextImage();
-      break;
-    case "ArrowLeft":
-      prevImage();
-      break;
-    case "Escape":
-      closeLightbox();
-      break;
+    case "ArrowRight": nextImage(); break;
+    case "ArrowLeft": prevImage(); break;
+    case "Escape": closeLightbox(); break;
     case "+":
-    case "=":
-      zoomIn();
-      break;
-    case "-":
-      zoomOut();
-      break;
-    case "0":
-      fitScreen();
-      break;
-    default:
-      break;
+    case "=": zoomIn(); break;
+    case "-": zoomOut(); break;
+    case "0": fitScreen(); break;
+    default: break;
   }
 });
 
 document.addEventListener("click", (e) => {
   const lb = lightbox();
   if (!isLightboxOpen() || !lb) return;
-
-  if (e.target === lb || e.target.classList.contains("lightbox-backdrop")) {
-    closeLightbox();
-  }
+  if (e.target === lb || e.target.classList.contains("lightbox-backdrop")) closeLightbox();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const lb = lightbox();
   const img = lightboxImg();
 
   if (img) {
@@ -262,6 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const lb = lightbox();
   if (lb) {
     lb.addEventListener("touchstart", (e) => {
       touchStartX = e.changedTouches[0].screenX;
@@ -271,7 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
     lb.addEventListener("touchend", (e) => {
       const diffX = e.changedTouches[0].screenX - touchStartX;
       const diffY = e.changedTouches[0].screenY - touchStartY;
-
       if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
         if (diffX < 0) nextImage();
         else prevImage();
@@ -284,7 +222,6 @@ document.addEventListener("DOMContentLoaded", () => {
     imgEl.setAttribute("tabindex", "0");
     imgEl.setAttribute("role", "button");
     imgEl.setAttribute("aria-label", "View image in lightbox");
-
     imgEl.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -307,4 +244,3 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
->>>>>>> 27a2b6f (Updated portfolio with new features and bug fixes)
