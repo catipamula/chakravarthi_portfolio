@@ -143,12 +143,15 @@ main {
 }
 
 .btn {
+    align-items: center;
     border: 1px solid transparent;
     border-radius: 10px;
     cursor: pointer;
     font-weight: 700;
     min-height: 2.75rem;
     padding: .65rem 1rem;
+    justify-content: center;
+    text-decoration: none;
     transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
     width: 100%;
 }
@@ -210,3 +213,4 @@ a:focus-visible,
         transition-duration: .01ms !important;
     }
 }
+    display: inline-flex;

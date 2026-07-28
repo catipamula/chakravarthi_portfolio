@@ -1,8 +1,12 @@
-function toggleMenu() {
+function setMenuState(isOpen) {
   const menu = document.querySelector(".menu-links");
-  const icon = document.querySelector(".hamburger-icon");
-  menu.classList.toggle("open");
-  icon.classList.toggle("open");
+  const toggle = document.querySelector(".hamburger-icon");
+  if (!menu || !toggle) return;
+
+  menu.classList.toggle("open", isOpen);
+  toggle.classList.toggle("open", isOpen);
+  toggle.setAttribute("aria-expanded", String(isOpen));
+  toggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
 }
 
 function downloadAndViewCV() {
@@ -12,41 +16,41 @@ function downloadAndViewCV() {
   link.download = "Chakravarthi_Resume.pdf";
   document.body.appendChild(link);
   link.click();
-  document.body.removeChild(link);
-  window.open(fileUrl, "_blank");
-}
-
-function playVideo(videoSrc) {
-  const modal = document.getElementById("videoModal");
-  const video = document.getElementById("demoVideo");
-  if (!modal || !video) return;
-  video.src = videoSrc;
-  modal.style.display = "flex";
-  video.play();
-}
-
-function closeVideo() {
-  const modal = document.getElementById("videoModal");
-  const video = document.getElementById("demoVideo");
-  if (!modal || !video) return;
-  video.pause();
-  video.currentTime = 0;
-  modal.style.display = "none";
+  link.remove();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.querySelector(".hamburger-icon");
+  const menuLinks = document.querySelectorAll(".menu-links a");
+
+  menuToggle?.addEventListener("click", () => {
+    setMenuState(!menuToggle.classList.contains("open"));
+  });
+
+  menuLinks.forEach((link) => link.addEventListener("click", () => setMenuState(false)));
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menuToggle?.classList.contains("open")) {
+      setMenuState(false);
+      menuToggle.focus();
+    }
+  });
+
+  document.getElementById("resume-download")?.addEventListener("click", downloadAndViewCV);
+
   const contactForm = document.getElementById("contactForm");
-  if (contactForm) {
-    contactForm.addEventListener("submit", () => {
-      const submitBtn = document.getElementById("submitBtn");
-      const loadingMessage = document.getElementById("loadingMessage");
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Sending...";
-      }
-      if (loadingMessage) loadingMessage.style.display = "block";
-    });
-  }
+  contactForm?.addEventListener("submit", () => {
+    const submitBtn = document.getElementById("submitBtn");
+    const formStatus = document.getElementById("formStatus");
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+    }
+    if (formStatus) {
+      formStatus.hidden = false;
+      formStatus.textContent = "Sending your message...";
+    }
+  });
 
   const typedEl = document.getElementById("typed-text");
   if (typedEl && typeof Typed !== "undefined") {
@@ -61,30 +65,19 @@ document.addEventListener("DOMContentLoaded", () => {
       backDelay: 1500,
       loop: true,
     });
-  }
-
-  const hamburgerIcon = document.querySelector(".hamburger-icon");
-  if (hamburgerIcon) {
-    hamburgerIcon.setAttribute("role", "button");
-    hamburgerIcon.setAttribute("tabindex", "0");
-    hamburgerIcon.setAttribute("aria-label", "Toggle navigation menu");
-    hamburgerIcon.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        toggleMenu();
-      }
-    });
+  } else if (typedEl) {
+    typedEl.textContent = "Full Stack Python Developer";
   }
 
   const navLinks = [...document.querySelectorAll('.nav-links a[href^="#"], .menu-links a[href^="#"]')];
   const sections = [...new Set(navLinks
-    .map((link) => document.querySelector(link.getAttribute('href')))
+    .map((link) => document.querySelector(link.getAttribute("href")))
     .filter(Boolean))];
 
-  if (sections.length && 'IntersectionObserver' in window) {
+  if (sections.length && "IntersectionObserver" in window) {
     const setActiveLink = (sectionId) => {
       navLinks.forEach((link) => {
-        link.classList.toggle('active', link.getAttribute('href') === `#${sectionId}`);
+        link.classList.toggle("active", link.getAttribute("href") === `#${sectionId}`);
       });
     };
 
@@ -93,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .filter((entry) => entry.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
       if (visibleSection) setActiveLink(visibleSection.target.id);
-    }, { rootMargin: '-35% 0px -55% 0px', threshold: [0.01, 0.25, 0.5] });
+    }, { rootMargin: "-35% 0px -55% 0px", threshold: [0.01, 0.25, 0.5] });
 
     sections.forEach((section) => sectionObserver.observe(section));
   }

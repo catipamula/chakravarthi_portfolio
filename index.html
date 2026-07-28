@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Portfolio of Chakravarthi Atipamula - Python Full Stack Developer" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="robots" content="index, follow" />
     <title>Chakravarthi Atipamula | Portfolio</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./mediaqueries.css" />
   </head>
@@ -28,19 +30,19 @@
     <nav id="hamburger-nav" aria-label="Mobile navigation">
       <a class="logo" href="#profile" aria-label="Chakravarthi Atipamula home">CA</a>
       <div class="hamburger-menu">
-        <div class="hamburger-icon" onclick="toggleMenu()" onkeydown="if(event.key==='Enter'||event.key===' ')toggleMenu()">
+        <button class="hamburger-icon" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu">
           <span></span>
           <span></span>
           <span></span>
-        </div>
-        <ul class="menu-links">
-          <li><a href="#about" onclick="toggleMenu()">About</a></li>
-          <li><a href="#Tools" onclick="toggleMenu()">Tools</a></li>
-          <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
-          <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
-          <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
-          <li><a href="./gallery.html" onclick="toggleMenu()">Blog</a></li>
-          <li><a href="./certificate.html" onclick="toggleMenu()">Certificates</a></li>
+        </button>
+        <ul class="menu-links" id="mobile-menu">
+          <li><a href="#about">About</a></li>
+          <li><a href="#Tools">Tools</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="./gallery.html">Blog</a></li>
+          <li><a href="./certificate.html">Certificates</a></li>
         </ul>
       </div>
     </nav>
@@ -57,13 +59,13 @@
         </p>
         <p class="hero-intro">Building scalable web applications, AI-powered solutions, and intelligent automation systems with Python and modern technologies.</p>
         <div class="btn-container">
-          <button class="btn btn-color-1" type="button" onclick="location.href='./#projects'">View Projects</button>
-          <button class="btn btn-color-2" type="button" onclick="downloadAndViewCV()">Download Resume</button>
-          <button class="btn btn-color-2" type="button" onclick="location.href='./#contact'">Contact Info</button>
+          <a class="btn btn-color-1" href="#projects">View Projects</a>
+          <button class="btn btn-color-2" id="resume-download" type="button">Download Resume</button>
+          <a class="btn btn-color-2" href="#contact">Contact Info</a>
         </div>
         <div id="socials-container">
-          <img src="./assets/linkedin.png" alt="LinkedIn profile" class="icon" onclick="location.href='https://www.linkedin.com/in/chakravarthi-atipamula-8293aa217'" />
-          <img src="./assets/github.png" alt="GitHub profile" class="icon" onclick="location.href='https://github.com/catipamula'" />
+          <a href="https://www.linkedin.com/in/chakravarthi-atipamula-8293aa217" target="_blank" rel="noopener noreferrer" aria-label="Visit Chakravarthi Atipamula's LinkedIn profile"><img src="./assets/linkedin.png" alt="" class="icon" /></a>
+          <a href="https://github.com/catipamula" target="_blank" rel="noopener noreferrer" aria-label="Visit Chakravarthi Atipamula's GitHub profile"><img src="./assets/github.png" alt="" class="icon" /></a>
         </div>
       </div>
     </section>
@@ -93,7 +95,7 @@
           </div>
         </div>
       </div>
-      <img src="./assets/arrow.png" alt="Scroll to Tools section" class="icon arrow" onclick="location.href='./#Tools'" />
+      <a class="arrow" href="#Tools" aria-label="Scroll to Tools section"><img src="./assets/arrow.png" alt="" class="icon" /></a>
     </section>
 
     <section id="Tools">
@@ -140,7 +142,7 @@
         <div><h2>APIs &amp; Automation</h2><p>Flask · FastAPI · REST APIs · n8n · WebSockets</p></div>
         <div><h2>Databases &amp; Delivery</h2><p>MySQL · PostgreSQL · SQLite · GitHub · Postman</p></div>
       </div> -->
-      <img src="./assets/arrow.png" alt="Scroll to Experience section" class="icon arrow" onclick="location.href='./#experience'" />
+      <a class="arrow" href="#experience" aria-label="Scroll to Experience section"><img src="./assets/arrow.png" alt="" class="icon" /></a>
     </section>
 
     <section id="experience">
@@ -197,12 +199,9 @@
         </div>
 
         <div class="btn-container">
-          <button
-            class="btn btn-color-2 project-btn"
-            type="button"
-            onclick="window.open('https://drive.google.com/file/d/1BHXs2DEgCcqVnd23VXo2sKK-xkzA0hH3/view?usp=sharing', '_blank')">
+          <a class="btn btn-color-2 project-btn" href="https://drive.google.com/file/d/1BHXs2DEgCcqVnd23VXo2sKK-xkzA0hH3/view?usp=sharing" target="_blank" rel="noopener noreferrer">
             Live Demo
-          </button>
+          </a>
         </div>
       </div>
 
@@ -226,12 +225,9 @@
         </div>
 
         <div class="btn-container">
-          <button
-            class="btn btn-color-2 project-btn"
-            type="button"
-            onclick="window.open('https://drive.google.com/file/d/1bGwwAssv0OVT1fqh3J_ZNUy-1_EuiRvr/view?usp=sharing', '_blank')">
+          <a class="btn btn-color-2 project-btn" href="https://drive.google.com/file/d/1bGwwAssv0OVT1fqh3J_ZNUy-1_EuiRvr/view?usp=sharing" target="_blank" rel="noopener noreferrer">
             Live Demo
-          </button>
+          </a>
         </div>
       </div>
 
@@ -253,12 +249,9 @@
         </div>
 
         <div class="btn-container">
-          <button
-            class="btn btn-color-2 project-btn"
-            type="button"
-            onclick="window.open('https://drive.google.com/file/d/1jcxYig5vd9Y3CyPlrnGodafI35auXInt/view?usp=sharing', '_blank')">
+          <a class="btn btn-color-2 project-btn" href="https://drive.google.com/file/d/1jcxYig5vd9Y3CyPlrnGodafI35auXInt/view?usp=sharing" target="_blank" rel="noopener noreferrer">
             Live Demo
-          </button>
+          </a>
         </div>
       </div>
 
@@ -281,29 +274,78 @@
         </div>
 
         <div class="btn-container">
-          <button
-            class="btn btn-color-2 project-btn"
-            type="button"
-            onclick="window.open('https://drive.google.com/file/d/1zGiTOuIUTWOkb4R2PRJqW3O-yQZ-Mohz/view?usp=sharing', '_blank')">
+          <a class="btn btn-color-2 project-btn" href="https://drive.google.com/file/d/1zGiTOuIUTWOkb4R2PRJqW3O-yQZ-Mohz/view?usp=sharing" target="_blank" rel="noopener noreferrer">
             Live Demo
-          </button>
+          </a>
         </div>
       </div>
 
     </div>
   </div>
 
-  <div id="videoModal" role="dialog" aria-label="Video demo">
-    <video id="demoVideo" controls></video>
-    <button type="button" onclick="closeVideo()" aria-label="Close video">&times;</button>
-  </div>
+  <a class="arrow" href="#contact" aria-label="Scroll to Contact section"><img src="./assets/arrow.png" alt="" class="icon" /></a>
+</section>
 
-  <img
-    src="./assets/arrow.png"
-    alt="Scroll to Contact section"
-    class="icon arrow"
-    onclick="location.href='./#contact'"
-  />
+<!-- Contact Section -->
+<section id="contact">
+  <p class="section__text__p1">Get in Touch</p>
+  <h1 class="title">Let's Work Together</h1>
+
+  <form
+    id="contactForm"
+    action="https://formspree.io/f/mwplgedn"
+    method="POST"
+    autocomplete="on"
+  >
+    <!-- Form Configuration -->
+    <input type="hidden" name="_subject" value="Portfolio Contact Form Submission" />
+    <input type="hidden" name="_captcha" value="false" />
+
+    <!-- Name -->
+    <div class="form-group">
+      <label for="name" class="visually-hidden">Full Name</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Full Name"
+        autocomplete="name"
+        required
+      />
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email" class="visually-hidden">Email Address</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Email Address"
+        autocomplete="email"
+        required
+      />
+    </div>
+
+    <!-- Message -->
+    <div class="form-group">
+      <label for="message" class="visually-hidden">Message</label>
+      <textarea
+        id="message"
+        name="message"
+        rows="6"
+        placeholder="Tell me about your project or opportunity..."
+        required
+      ></textarea>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" id="submitBtn" class="btn btn-color-1">
+      Send Message
+    </button>
+    <p id="formStatus" class="form-status" role="status" aria-live="polite" hidden></p>
+
+      </form>
 </section>
 
     <footer>
@@ -311,7 +353,6 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous" defer></script>
     <script src="./script.js" defer></script>
   </body>
 </html>

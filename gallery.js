@@ -5,6 +5,8 @@ let isFitScreen = true;
 let activeGalleryId = null;
 let touchStartX = 0;
 let touchStartY = 0;
+let galleryTrigger = null;
+let lightboxTrigger = null;
 
 const ZOOM_MIN = 0.5;
 const ZOOM_MAX = 4;
@@ -14,14 +16,19 @@ const lightbox = () => document.getElementById("lightbox");
 const lightboxImg = () => document.getElementById("lightbox-img");
 const lightboxCounter = () => document.getElementById("lightbox-counter");
 const lightboxFilename = () => document.getElementById("lightbox-filename");
+const getFocusableElements = (container) => [...container.querySelectorAll(
+  'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])'
+)].filter((element) => !element.hidden);
 
 const showGallery = (id) => {
   const el = document.getElementById(id);
   if (el) {
+    galleryTrigger = document.activeElement;
     el.style.display = "block";
     el.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
     activeGalleryId = id;
+    requestAnimationFrame(() => el.querySelector(".close")?.focus());
   }
 };
 
@@ -32,6 +39,7 @@ const closeGallery = (id) => {
     el.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
     if (activeGalleryId === id) activeGalleryId = null;
+    galleryTrigger?.focus?.();
   }
 };
 
@@ -89,6 +97,7 @@ const openLightbox = (src, galleryId) => {
   const lb = lightbox();
   if (!lb) return;
 
+  lightboxTrigger = document.activeElement;
   lb.style.display = "flex";
   lb.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -112,6 +121,7 @@ const closeLightbox = () => {
     if (!activeGalleryId) document.body.style.overflow = "";
     zoomLevel = 1;
     isFitScreen = true;
+    lightboxTrigger?.focus?.();
   }, 300);
 };
 
@@ -155,6 +165,27 @@ const isLightboxOpen = () => {
 };
 
 document.addEventListener("keydown", (e) => {
+  const openDialog = isLightboxOpen()
+    ? lightbox()
+    : activeGalleryId
+      ? document.getElementById(activeGalleryId)
+      : null;
+
+  if (e.key === "Tab" && openDialog) {
+    const focusable = getFocusableElements(openDialog);
+    if (focusable.length) {
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  }
+
   if (!isLightboxOpen()) {
     if (e.key === "Escape" && activeGalleryId) closeGallery(activeGalleryId);
     return;
